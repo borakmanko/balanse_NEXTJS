@@ -1,23 +1,16 @@
-// src/services/supabase.ts
-import { createClient } from "@supabase/supabase-js";
-import { UserProfile } from "@/types/user";
+// src/services/useSupabase.ts
+"use client";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createBrowserClient } from '@supabase/ssr'
+import { useState } from 'react'
 
-export async function getUserProfile(firebaseUid: string): Promise<UserProfile | null> {
-  const { data, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("firebaseUid", firebaseUid)
-    .single();
+export function useSupabase() {
+  const [supabase] = useState(() => 
+    createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+    )
+  )
 
-  if (error) {
-    console.error("Error fetching profile:", error);
-    return null;
-  }
-
-  return data as UserProfile;
+  return supabase
 }

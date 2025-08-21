@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useAuth } from "./lib/AuthContext";
+import { LogOut, User as UserIcon } from "lucide-react";
 import {
   Heart,
   ArrowRight,
@@ -28,6 +30,7 @@ import { useState } from "react";
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, loading, signOut } = useAuth();
 
   // Stats data
   const stats = [
@@ -223,24 +226,55 @@ export default function HomePage() {
               >
                 Contact
               </a>
+              <a
+                href=""
+                className="text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Book a Class
+              </a>
             </div>
 
             {/* Auth Section */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link
-                href="/auth/login"
-                className="flex items-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                <User size={16} />
-                <span>Log In</span>
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors"
-              >
-                <UserPlus size={16} />
-                <span>Sign Up</span>
-              </Link>
+              {loading ? (
+                <div className="w-8 h-8 animate-spin rounded-full border-2 border-emerald-600 border-t-transparent"></div>
+              ) : user ? (
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                      <UserIcon size={16} className="text-emerald-600" />
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">
+                      {user.user_metadata?.full_name ||
+                        user.email?.split("@")[0]}
+                    </span>
+                  </div>
+                  <button
+                    onClick={signOut}
+                    className="flex items-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                  >
+                    <LogOut size={16} />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                  >
+                    <User size={16} />
+                    <span>Log In</span>
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors"
+                  >
+                    <UserPlus size={16} />
+                    <span>Sign Up</span>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -282,22 +316,45 @@ export default function HomePage() {
                 >
                   Book Class
                 </Link>
-                <div className="pt-4 pb-3 border-t border-gray-200">
-                  <Link
-                    href="/auth/login"
-                    className="flex items-center justify-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium"
-                  >
-                    <User size={16} />
-                    <span>Log In</span>
-                  </Link>
-                  <Link
-                    href="/auth/signup"
-                    className="flex items-center justify-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 mx-3 mt-2"
-                  >
-                    <UserPlus size={16} />
-                    <span>Sign Up</span>
-                  </Link>
-                </div>
+                {loading ? (
+                  <div className="flex justify-center py-4">
+                    <div className="w-6 h-6 animate-spin rounded-full border-2 border-emerald-600 border-t-transparent"></div>
+                  </div>
+                ) : user ? (
+                  <div className="pt-4 pb-3 border-t border-gray-200">
+                    <div className="flex items-center justify-center space-x-2 px-3 py-2">
+                      <UserIcon size={16} className="text-emerald-600" />
+                      <span className="text-sm font-medium text-gray-700">
+                        {user.user_metadata?.full_name ||
+                          user.email?.split("@")[0]}
+                      </span>
+                    </div>
+                    <button
+                      onClick={signOut}
+                      className="flex items-center justify-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium mx-3 mt-2 rounded-lg hover:bg-gray-100 w-full"
+                    >
+                      <LogOut size={16} />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="pt-4 pb-3 border-t border-gray-200">
+                    <Link
+                      href="/login"
+                      className="flex items-center justify-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium"
+                    >
+                      <User size={16} />
+                      <span>Log In</span>
+                    </Link>
+                    <Link
+                      href="/sign-up"
+                      className="flex items-center justify-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 mx-3 mt-2"
+                    >
+                      <UserPlus size={16} />
+                      <span>Sign Up</span>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -305,7 +362,10 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-teal-50 pt-16">
+      <section
+        id="home"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-teal-50 pt-16"
+      >
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div
