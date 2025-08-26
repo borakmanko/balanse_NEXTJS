@@ -31,6 +31,7 @@ import { useState } from "react";
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, loading, signOut } = useAuth();
+  const closeMenu = () => setIsMenuOpen(false);
 
   // Stats data
   const stats = [
@@ -48,7 +49,7 @@ export default function HomePage() {
         "Gentle, slow-paced yoga focusing on basic postures and breathing techniques.",
       duration: "60 min",
       level: "Beginner",
-      color: "from-rose-500 to-pink-500",
+      color: "from-amber-600 to-orange-600",
     },
     {
       icon: Zap,
@@ -57,7 +58,7 @@ export default function HomePage() {
         "Dynamic sequences that link movement and breath in a flowing practice.",
       duration: "75 min",
       level: "Intermediate",
-      color: "from-emerald-500 to-teal-500",
+      color: "from-yellow-700 to-amber-700",
     },
     {
       icon: Award,
@@ -66,7 +67,7 @@ export default function HomePage() {
         "Traditional, vigorous style of yoga with a set sequence of poses.",
       duration: "90 min",
       level: "Advanced",
-      color: "from-orange-500 to-red-500",
+      color: "from-orange-600 to-red-600",
     },
     {
       icon: Moon,
@@ -75,7 +76,7 @@ export default function HomePage() {
         "Relaxing practice using props to support the body in restful poses.",
       duration: "60 min",
       level: "All Levels",
-      color: "from-purple-500 to-indigo-500",
+      color: "from-amber-700 to-yellow-800",
     },
     {
       icon: Users,
@@ -84,7 +85,7 @@ export default function HomePage() {
         "Yoga practiced in a heated room to enhance flexibility and detoxification.",
       duration: "60 min",
       level: "Intermediate",
-      color: "from-yellow-500 to-orange-500",
+      color: "from-yellow-600 to-orange-600",
     },
     {
       icon: Clock,
@@ -93,7 +94,7 @@ export default function HomePage() {
         "Fitness-based vinyasa practice with strength-building poses.",
       duration: "45 min",
       level: "Advanced",
-      color: "from-blue-500 to-cyan-500",
+      color: "from-amber-800 to-yellow-900",
     },
   ];
 
@@ -185,10 +186,10 @@ export default function HomePage() {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link href="/" className="flex items-center space-x-2 group">
-                <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                <div className="w-8 h-8 bg-gradient-to-br from-amber-600 to-yellow-700 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                   <Heart className="w-4 h-4 text-white" fill="white" />
                 </div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                <span className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-yellow-700 bg-clip-text text-transparent">
                   Balanse
                 </span>
               </Link>
@@ -198,37 +199,37 @@ export default function HomePage() {
             <div className="hidden md:flex items-center space-x-8">
               <a
                 href="#home"
-                className="text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 Home
               </a>
               <a
                 href="#classes"
-                className="text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 Classes
               </a>
               <a
                 href="#instructors"
-                className="text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 Instructors
               </a>
               <a
                 href="#testimonials"
-                className="text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 Testimonials
               </a>
               <a
                 href="#footer"
-                className="text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 Contact
               </a>
               <a
                 href=""
-                className="text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 Book a Class
               </a>
@@ -237,12 +238,12 @@ export default function HomePage() {
             {/* Auth Section */}
             <div className="hidden md:flex items-center space-x-4">
               {loading ? (
-                <div className="w-8 h-8 animate-spin rounded-full border-2 border-emerald-600 border-t-transparent"></div>
+                <div className="w-8 h-8 animate-spin rounded-full border-2 border-amber-600 border-t-transparent"></div>
               ) : user ? (
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-                      <UserIcon size={16} className="text-emerald-600" />
+                    <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+                      <UserIcon size={16} className="text-amber-600" />
                     </div>
                     <span className="text-sm font-medium text-gray-700">
                       {user.user_metadata?.full_name ||
@@ -251,7 +252,7 @@ export default function HomePage() {
                   </div>
                   <button
                     onClick={signOut}
-                    className="flex items-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors"
                   >
                     <LogOut size={16} />
                     <span>Sign Out</span>
@@ -261,14 +262,14 @@ export default function HomePage() {
                 <>
                   <Link
                     href="/login"
-                    className="flex items-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium transition-colors"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors"
                   >
                     <User size={16} />
                     <span>Log In</span>
                   </Link>
                   <Link
                     href="/sign-up"
-                    className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors"
+                    className="flex items-center space-x-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-amber-700 transition-colors"
                   >
                     <UserPlus size={16} />
                     <span>Sign Up</span>
@@ -281,7 +282,7 @@ export default function HomePage() {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-emerald-600 p-2"
+                className="text-gray-700 hover:text-amber-600 p-2"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -292,38 +293,42 @@ export default function HomePage() {
           {isMenuOpen && (
             <div className="md:hidden bg-white border-t">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <Link
-                  href="/"
-                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-emerald-600"
+                <a
+                  href="#home"
+                  onClick={closeMenu}
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-amber-600"
                 >
                   Home
-                </Link>
-                <Link
-                  href="/classes"
-                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-emerald-600"
+                </a>
+                <a
+                  href="#classes"
+                  onClick={closeMenu}
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-amber-600"
                 >
                   Classes
-                </Link>
-                <Link
-                  href="/instructors"
-                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-emerald-600"
+                </a>
+                <a
+                  href="#instructors"
+                  onClick={closeMenu}
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-amber-600"
                 >
                   Instructors
-                </Link>
+                </a>
                 <Link
                   href="/book"
-                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-emerald-600"
+                  onClick={closeMenu}
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-amber-600"
                 >
                   Book Class
                 </Link>
                 {loading ? (
                   <div className="flex justify-center py-4">
-                    <div className="w-6 h-6 animate-spin rounded-full border-2 border-emerald-600 border-t-transparent"></div>
+                    <div className="w-6 h-6 animate-spin rounded-full border-2 border-amber-600 border-t-transparent"></div>
                   </div>
                 ) : user ? (
                   <div className="pt-4 pb-3 border-t border-gray-200">
                     <div className="flex items-center justify-center space-x-2 px-3 py-2">
-                      <UserIcon size={16} className="text-emerald-600" />
+                      <UserIcon size={16} className="text-amber-600" />
                       <span className="text-sm font-medium text-gray-700">
                         {user.user_metadata?.full_name ||
                           user.email?.split("@")[0]}
@@ -331,7 +336,7 @@ export default function HomePage() {
                     </div>
                     <button
                       onClick={signOut}
-                      className="flex items-center justify-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium mx-3 mt-2 rounded-lg hover:bg-gray-100 w-full"
+                      className="flex items-center justify-center space-x-2 text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium mx-3 mt-2 rounded-lg hover:bg-gray-100 w-full"
                     >
                       <LogOut size={16} />
                       <span>Sign Out</span>
@@ -341,14 +346,16 @@ export default function HomePage() {
                   <div className="pt-4 pb-3 border-t border-gray-200">
                     <Link
                       href="/login"
-                      className="flex items-center justify-center space-x-2 text-gray-700 hover:text-emerald-600 px-3 py-2 text-sm font-medium"
+                       onClick={closeMenu}
+                      className="flex items-center justify-center space-x-2 text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium"
                     >
                       <User size={16} />
                       <span>Log In</span>
                     </Link>
                     <Link
                       href="/sign-up"
-                      className="flex items-center justify-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 mx-3 mt-2"
+                       onClick={closeMenu}
+                      className="flex items-center justify-center space-x-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-amber-700 mx-3 mt-2"
                     >
                       <UserPlus size={16} />
                       <span>Sign Up</span>
@@ -364,14 +371,14 @@ export default function HomePage() {
       {/* Hero Section */}
       <section
         id="home"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-teal-50 pt-16"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-amber-50 via-white to-yellow-50 pt-16"
       >
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d97706' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
             }}
           />
         </div>
@@ -381,7 +388,7 @@ export default function HomePage() {
             {/* Left Content */}
             <div className="text-center lg:text-left">
               <div className="mb-6">
-                <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 mb-4">
+                <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-amber-100 text-amber-800 mb-4">
                   <Star className="w-4 h-4 mr-2 fill-current" />
                   Rated #1 Yoga Studio
                 </span>
@@ -389,7 +396,7 @@ export default function HomePage() {
 
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                 Find Your
-                <span className="block bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-amber-600 to-yellow-700 bg-clip-text text-transparent">
                   Inner Peace
                 </span>
               </h1>
@@ -403,13 +410,13 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link
                   href="/classes"
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-full hover:from-emerald-700 hover:to-teal-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-600 to-yellow-700 text-white font-semibold rounded-full hover:from-amber-700 hover:to-yellow-800 transform hover:scale-105 transition-all duration-200 shadow-lg"
                 >
                   Book Your First Class
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
 
-                <button className="inline-flex items-center px-8 py-4 border-2 border-emerald-600 text-emerald-600 font-semibold rounded-full hover:bg-emerald-50 transition-all duration-200">
+                <button className="inline-flex items-center px-8 py-4 border-2 border-amber-600 text-amber-600 font-semibold rounded-full hover:bg-amber-50 transition-all duration-200">
                   <Play className="mr-2 w-5 h-5" />
                   Watch Demo
                 </button>
@@ -440,8 +447,8 @@ export default function HomePage() {
                 {/* Floating Card */}
                 <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-6 max-w-xs">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                      <Star className="w-6 h-6 text-emerald-600 fill-current" />
+                    <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                      <Star className="w-6 h-6 text-amber-600 fill-current" />
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900">
@@ -456,7 +463,7 @@ export default function HomePage() {
               </div>
 
               {/* Background Decoration */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl transform rotate-3 scale-105 opacity-20"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-2xl transform rotate-3 scale-105 opacity-20"></div>
             </div>
           </div>
         </div>
@@ -522,7 +529,7 @@ export default function HomePage() {
           </div>
 
           <div className="text-center">
-            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-8 text-white">
+            <div className="bg-gradient-to-r from-amber-600 to-yellow-700 rounded-2xl p-8 text-white">
               <h3 className="text-3xl font-bold mb-4">
                 Ready to Start Your Journey?
               </h3>
@@ -532,7 +539,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="/classes"
-                className="inline-flex items-center px-8 py-4 bg-white text-emerald-600 font-semibold rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                className="inline-flex items-center px-8 py-4 bg-white text-amber-600 font-semibold rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-lg"
               >
                 Book Your First Class
                 <Heart className="ml-2 w-5 h-5" />
@@ -584,7 +591,7 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <p className="text-emerald-600 font-medium mb-2">
+                  <p className="text-amber-600 font-medium mb-2">
                     {instructor.specialty}
                   </p>
 
@@ -611,7 +618,7 @@ export default function HomePage() {
                       {instructor.certifications.map((cert, certIndex) => (
                         <span
                           key={certIndex}
-                          className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full"
+                          className="px-2 py-1 bg-amber-100 text-amber-700 text-xs rounded-full"
                         >
                           {cert}
                         </span>
@@ -628,7 +635,7 @@ export default function HomePage() {
       {/* Testimonials Section */}
       <section
         id="testimonials"
-        className="py-20 bg-gradient-to-br from-emerald-50 via-white to-teal-50"
+        className="py-20 bg-gradient-to-br from-amber-50 via-white to-yellow-50"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -648,7 +655,7 @@ export default function HomePage() {
                 className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:-translate-y-2"
               >
                 <div className="flex justify-between items-start mb-6">
-                  <Quote className="w-8 h-8 text-emerald-500 opacity-50" />
+                  <Quote className="w-8 h-8 text-amber-500 opacity-50" />
                   <div className="flex items-center space-x-1">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star
@@ -667,14 +674,14 @@ export default function HomePage() {
                   <img
                     src={testimonial.image}
                     alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-emerald-200"
+                    className="w-12 h-12 rounded-full object-cover border-2 border-amber-200"
                   />
                   <div>
                     <h4 className="font-semibold text-gray-900">
                       {testimonial.name}
                     </h4>
                     <p className="text-sm text-gray-600">{testimonial.role}</p>
-                    <p className="text-xs text-emerald-600 font-medium">
+                    <p className="text-xs text-amber-600 font-medium">
                       {testimonial.class}
                     </p>
                   </div>
@@ -684,7 +691,7 @@ export default function HomePage() {
           </div>
 
           <div className="text-center">
-            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-8 text-white">
+            <div className="bg-gradient-to-r from-amber-600 to-yellow-700 rounded-2xl p-8 text-white">
               <Heart className="w-12 h-12 mx-auto mb-4 fill-current" />
               <h3 className="text-3xl font-bold mb-4">
                 Ready to Start Your Transformation?
@@ -696,7 +703,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="/classes"
-                className="inline-flex items-center px-8 py-4 bg-white text-emerald-600 font-semibold rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                className="inline-flex items-center px-8 py-4 bg-white text-amber-600 font-semibold rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-lg"
               >
                 Book Your First Class
                 <Heart className="ml-2 w-5 h-5" />
@@ -713,10 +720,10 @@ export default function HomePage() {
             {/* Brand Section */}
             <div className="lg:col-span-1">
               <div className="flex items-center space-x-2 mb-6">
-                <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
                   <Heart className="w-4 h-4 text-white" fill="white" />
                 </div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                <span className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
                   Balanse
                 </span>
               </div>
@@ -728,25 +735,25 @@ export default function HomePage() {
               <div className="flex space-x-4">
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors duration-200"
+                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition-colors duration-200"
                 >
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors duration-200"
+                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition-colors duration-200"
                 >
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors duration-200"
+                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition-colors duration-200"
                 >
                   <Twitter className="w-5 h-5" />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors duration-200"
+                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition-colors duration-200"
                 >
                   <Youtube className="w-5 h-5" />
                 </a>
@@ -760,7 +767,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/about"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     About Us
                   </Link>
@@ -768,7 +775,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/classes"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Classes
                   </Link>
@@ -776,7 +783,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/instructors"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Instructors
                   </Link>
@@ -784,7 +791,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/schedule"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Schedule
                   </Link>
@@ -792,7 +799,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/pricing"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Pricing
                   </Link>
@@ -800,7 +807,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/blog"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Blog
                   </Link>
@@ -815,7 +822,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/classes/vinyasa"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Vinyasa Flow
                   </Link>
@@ -823,7 +830,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/classes/hatha"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Hatha Yoga
                   </Link>
@@ -831,7 +838,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/classes/power"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Power Yoga
                   </Link>
@@ -839,7 +846,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/classes/restorative"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Restorative Yoga
                   </Link>
@@ -847,7 +854,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/classes/hot"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Hot Yoga
                   </Link>
@@ -855,7 +862,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     href="/classes/meditation"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                    className="text-gray-400 hover:text-amber-400 transition-colors duration-200"
                   >
                     Meditation
                   </Link>
@@ -868,18 +875,18 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-6">Contact Us</h3>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
-                  <MapPin className="w-5 h-5 text-emerald-400 mt-1 flex-shrink-0" />
+                  <MapPin className="w-5 h-5 text-amber-400 mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-gray-400">123 Wellness Street</p>
                     <p className="text-gray-400">Mindful City, MC 12345</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Phone className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                  <Phone className="w-5 h-5 text-amber-400 flex-shrink-0" />
                   <p className="text-gray-400">(555) 123-YOGA</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Mail className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                  <Mail className="w-5 h-5 text-amber-400 flex-shrink-0" />
                   <p className="text-gray-400">hello@balanse.com</p>
                 </div>
               </div>
@@ -905,19 +912,19 @@ export default function HomePage() {
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <Link
                   href="/privacy"
-                  className="text-gray-400 hover:text-emerald-400 text-sm transition-colors duration-200"
+                  className="text-gray-400 hover:text-amber-400 text-sm transition-colors duration-200"
                 >
                   Privacy Policy
                 </Link>
                 <Link
                   href="/terms"
-                  className="text-gray-400 hover:text-emerald-400 text-sm transition-colors duration-200"
+                  className="text-gray-400 hover:text-amber-400 text-sm transition-colors duration-200"
                 >
                   Terms of Service
                 </Link>
                 <Link
                   href="/cookies"
-                  className="text-gray-400 hover:text-emerald-400 text-sm transition-colors duration-200"
+                  className="text-gray-400 hover:text-amber-400 text-sm transition-colors duration-200"
                 >
                   Cookie Policy
                 </Link>

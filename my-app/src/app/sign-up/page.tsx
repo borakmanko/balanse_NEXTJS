@@ -20,12 +20,12 @@ const Signup = () => {
 
   // Yoga background images
   const yogaImages = [
-    "/yoga/1.jpeg", // 👉 Move these into /public/yoga/ for better performance
-    "/yoga/2.jpeg",
-    "/yoga/3.jpeg",
-    "/yoga/4.jpeg",
-    "/yoga/5.jpeg",
-    "/yoga/6.jpeg",
+    "https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    "https://images.pexels.com/photos/3823063/pexels-photo-3823063.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    "https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    "https://images.pexels.com/photos/3823076/pexels-photo-3823076.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    "https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    "https://images.pexels.com/photos/3823042/pexels-photo-3823042.jpeg?auto=compress&cs=tinysrgb&w=1920",
   ];
 
   // Auto-change background images
@@ -37,23 +37,64 @@ const Signup = () => {
     return () => clearInterval(interval);
   }, [yogaImages.length]);
 
-const signUpWithGoogle = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: `${window.location.origin}/api/auth/callback`
-    }
-  })
-  if (error) throw error
-}
+  const signUpWithGoogle = async () => {
+    try {
+      setAuthing(true);
 
-const signUpWithEmail = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-  })
-  if (error) throw error
-}
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/api/auth/callback`,
+        },
+      });
+
+      if (error) {
+        setError(error.message);
+      }
+    } catch (err: any) {
+      console.error(err);
+      setError("Google signup failed. Try again.");
+    } finally {
+      setAuthing(false);
+    }
+  };
+
+  const signUpWithEmail = async () => {
+    setError("");
+    
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      setAuthing(true);
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) {
+        if (error.message.includes("security purposes")) {
+          setError("Too many requests. Please wait a minute before trying again.");
+        } else if (error.message.includes("already registered")) {
+          setError("This email is already registered. Try logging in.");
+        } else {
+          setError(error.message);
+        }
+        return;
+      }
+
+      // ✅ Sign-up success
+      router.push("/"); // or redirect to dashboard if email confirmation is disabled
+    } catch (err: any) {
+      console.error(err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setAuthing(false);
+    }
+  };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -76,8 +117,8 @@ const signUpWithEmail = async () => {
         ))}
       </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-teal-800/20 to-cyan-900/30"></div>
+      {/* Gradient Overlay - Updated to caramel tones */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-yellow-800/20 to-orange-900/30"></div>
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
@@ -85,7 +126,7 @@ const signUpWithEmail = async () => {
           {/* Logo and Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-2 mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center shadow-2xl backdrop-blur-sm border border-white/20">
+              <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center shadow-2xl backdrop-blur-sm border border-white/20">
                 <Heart className="w-8 h-8 text-white" fill="white" />
               </div>
               <span className="text-4xl font-bold text-white drop-shadow-lg">
@@ -121,7 +162,7 @@ const signUpWithEmail = async () => {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 bg-white/90 backdrop-blur-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 bg-white/90 backdrop-blur-sm"
                   placeholder="Enter your email"
                 />
               </div>
@@ -139,7 +180,7 @@ const signUpWithEmail = async () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 pr-12 bg-white/90 backdrop-blur-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 pr-12 bg-white/90 backdrop-blur-sm"
                     placeholder="Enter your password"
                   />
                   <button
@@ -168,7 +209,7 @@ const signUpWithEmail = async () => {
                   id="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 bg-white/90 backdrop-blur-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 bg-white/90 backdrop-blur-sm"
                   placeholder="Confirm your password"
                 />
               </div>
@@ -176,7 +217,7 @@ const signUpWithEmail = async () => {
               <button
                 onClick={signUpWithEmail}
                 disabled={authing}
-                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-3 px-4 rounded-xl font-medium hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white py-3 px-4 rounded-xl font-medium hover:from-amber-600 hover:to-yellow-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
               >
                 {authing ? (
                   <Loader className="w-5 h-5 animate-spin" />
@@ -199,7 +240,7 @@ const signUpWithEmail = async () => {
               <button
                 onClick={signUpWithGoogle}
                 disabled={authing}
-                className="w-full bg-white/90 backdrop-blur-sm border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                className="w-full bg-white/90 backdrop-blur-sm border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
               >
                 {authing ? (
                   <Loader className="w-5 h-5 animate-spin" />
@@ -233,9 +274,8 @@ const signUpWithEmail = async () => {
               <p className="text-sm text-gray-600">
                 Already have an account?{" "}
                 <Link
-                  href="/auth/login"
-
-                  className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
+                  href="/login"
+                  className="text-amber-600 hover:text-amber-700 font-medium transition-colors"
                 >
                   Sign in
                 </Link>
@@ -260,10 +300,10 @@ const signUpWithEmail = async () => {
         </div>
       </div>
 
-      {/* Floating Elements for Visual Interest */}
+      {/* Floating Elements - Updated to caramel tones */}
       <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute bottom-32 right-16 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
-      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-teal-400/15 rounded-full blur-xl animate-pulse delay-500"></div>
+      <div className="absolute bottom-32 right-16 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
+      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-yellow-400/15 rounded-full blur-xl animate-pulse delay-500"></div>
     </div>
   );
 };

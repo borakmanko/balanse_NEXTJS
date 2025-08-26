@@ -1,4 +1,4 @@
-// src/services/useSupabase.ts
+// src/services/supabase.ts
 "use client";
 
 import { createBrowserClient } from '@supabase/ssr'

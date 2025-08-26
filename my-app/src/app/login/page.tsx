@@ -6,10 +6,6 @@ import { Heart, Eye, EyeOff, Loader } from "lucide-react";
 import Link from "next/link";
 import { useSupabase } from "@/services/supabase";
 
-
-
-
-
 export default function LoginPage() {
   const router = useRouter();
   const supabase = useSupabase();
@@ -32,24 +28,25 @@ export default function LoginPage() {
   ];
 
   async function signInWithSupabaseGoogle() {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: `${window.location.origin}/api/auth/callback`
-    }
-  })
-  if (error) throw error
-  return data
-}
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/api/auth/callback`
+      }
+    })
+    if (error) throw error
+    return data
+  }
 
-async function signInWithSupabaseEmail(email: string, password: string) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  })
-  if (error) throw error
-  return data
-}
+  async function signInWithSupabaseEmail(email: string, password: string) {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (error) throw error
+    return data
+  }
+
   // Auto-change background images
   useEffect(() => {
     const interval = setInterval(() => {
@@ -109,8 +106,8 @@ async function signInWithSupabaseEmail(email: string, password: string) {
         ))}
       </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-teal-800/20 to-cyan-900/30"></div>
+      {/* Gradient Overlay - Updated to caramel tones */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-yellow-800/20 to-orange-900/30"></div>
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
@@ -118,7 +115,7 @@ async function signInWithSupabaseEmail(email: string, password: string) {
           {/* Logo and Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-2 mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center shadow-2xl backdrop-blur-sm border border-white/20">
+              <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center shadow-2xl backdrop-blur-sm border border-white/20">
                 <Heart className="w-8 h-8 text-white" fill="white" />
               </div>
               <span className="text-4xl font-bold text-white drop-shadow-lg">
@@ -126,7 +123,7 @@ async function signInWithSupabaseEmail(email: string, password: string) {
               </span>
             </div>
             <h1 className="text-3xl font-semibold text-white mb-3 drop-shadow-lg">
-              Welcome back
+              Welcome!
             </h1>
             <p className="text-white/90 text-lg drop-shadow-md">
               Sign in to continue your yoga journey
@@ -154,7 +151,7 @@ async function signInWithSupabaseEmail(email: string, password: string) {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 bg-white/90 backdrop-blur-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 bg-white/90 backdrop-blur-sm"
                   placeholder="Enter your email"
                 />
               </div>
@@ -172,7 +169,7 @@ async function signInWithSupabaseEmail(email: string, password: string) {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 pr-12 bg-white/90 backdrop-blur-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 pr-12 bg-white/90 backdrop-blur-sm"
                     placeholder="Enter your password"
                   />
                   <button
@@ -192,7 +189,7 @@ async function signInWithSupabaseEmail(email: string, password: string) {
               <button
                 onClick={handleEmailLogin}
                 disabled={authing}
-                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-3 px-4 rounded-xl font-medium hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white py-3 px-4 rounded-xl font-medium hover:from-amber-600 hover:to-yellow-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
               >
                 {authing ? <Loader className="w-5 h-5 animate-spin" /> : "Sign In"}
               </button>
@@ -211,7 +208,7 @@ async function signInWithSupabaseEmail(email: string, password: string) {
               <button
                 onClick={handleGoogleLogin}
                 disabled={authing}
-                className="w-full bg-white/90 backdrop-blur-sm border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                className="w-full bg-white/90 backdrop-blur-sm border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
               >
                 {authing ? (
                   <Loader className="w-5 h-5 animate-spin" />
@@ -246,8 +243,7 @@ async function signInWithSupabaseEmail(email: string, password: string) {
                 Don't have an account?{" "}
                 <Link
                   href="/sign-up"
-
-                  className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
+                  className="text-amber-600 hover:text-amber-700 font-medium transition-colors"
                 >
                   Sign up
                 </Link>
@@ -272,10 +268,10 @@ async function signInWithSupabaseEmail(email: string, password: string) {
         </div>
       </div>
 
-      {/* Floating Elements */}
+      {/* Floating Elements - Updated to caramel tones */}
       <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute bottom-32 right-16 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
-      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-teal-400/15 rounded-full blur-xl animate-pulse delay-500"></div>
+      <div className="absolute bottom-32 right-16 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
+      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-yellow-400/15 rounded-full blur-xl animate-pulse delay-500"></div>
     </div>
   );
 }
