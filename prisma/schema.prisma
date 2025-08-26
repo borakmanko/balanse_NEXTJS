@@ -15,6 +15,22 @@ enum Gender {
   OTHER
 }
 
+enum YogaType {
+  HATHA
+  VINYASA
+  ASHTANGA
+  RESTORATIVE
+  HOT
+  POWER
+}
+
+enum YogaLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  ALL_LEVELS
+}
+
 enum ExperienceLevel {
   BEGINNER
   INTERMEDIATE
@@ -68,7 +84,7 @@ model UserProfile {
   firstName       String
   middleName      String?
   lastName        String
-  birthDate       DateTime
+  birthDate       DateTime         @db.Date  // Stores date only (YYYY-MM-DD)
   gender          Gender
   customGender    String?
   profilePicture  String?
@@ -78,7 +94,7 @@ model UserProfile {
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   email           String          @unique
-  phone           String?
+  phone           String?      @db.VarChar(15)  // Limit phone number length
 
   // Relationships
   address         Address?
@@ -124,7 +140,6 @@ model Transaction {
 
   // Optional relations based on transaction type
   bookingId       String?
-  packageId       String?
   subscriptionId  String?         @unique
 
   // Relationships
@@ -153,10 +168,10 @@ model UserPreferences {
 model YogaClass {
   id            String    @id @default(cuid())
   name          String
-  type          String
+  type          YogaType
   description   String
   duration      Int       // Duration in minutes
-  level         String
+  level         YogaLevel
   instructorId  String
   maxCapacity   Int
   basePrice     Decimal   @db.Decimal(10,2)
