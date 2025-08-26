@@ -1,4 +1,4 @@
-
+// /prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -33,14 +33,42 @@ enum BookingStatus {
   COMPLETED
 }
 
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum PaymentProvider {
+  PAYMAYA
+  GCASH
+  PAYMONGO
+}
+
+enum TransactionType {
+  BOOKING
+  SUBSCRIPTION
+  PACKAGE
+}
+
+model Address{
+  id          String   @id @default(cuid())
+  city        String
+  barangay    String
+  country     String @default("Philippines")
+  userProfile UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String      @unique
+
+  @@map("addresses")
+}
+
 model UserProfile {
-  id              String          @id @default(cuid())
+    id              String          @id @default(cuid())
   firstName       String
   middleName      String?
   lastName        String
-  age             Int
-  city            String
-  state           String
+  birthDate       DateTime
   gender          Gender
   customGender    String?
   profilePicture  String?
@@ -49,16 +77,64 @@ model UserProfile {
   role            UserRole        @default(USER)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  email           String          @unique
+  phone           String?
 
   // Relationships
+  address         Address?
   preferences     UserPreferences?
   bookings        BookingEvent[]
   instructedClasses YogaClass[]   @relation("InstructorClasses")
   userStats       UserStats?
   streakData      StreakData[]
+  transactions    Transaction[]
+  subscriptions   Subscription[]
 
   @@map("user_profiles")
 }
+model Subscription {
+  id          String        @id @default(cuid())
+  userId      String
+  startDate   DateTime
+  endDate     DateTime
+  status      Boolean       @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relationships
+  user        UserProfile   @relation(fields: [userId], references: [id])
+  transaction Transaction?
+
+  @@map("subscriptions")
+}
+
+// New Transaction Model
+model Transaction {
+  id              String          @id @default(cuid())
+  userId          String
+  amount          Decimal         @db.Decimal(10,2)
+  currency        String          @default("PHP")
+  type            TransactionType
+  status          PaymentStatus   @default(PENDING)
+  provider        PaymentProvider
+  referenceId     String          @unique // Payment provider's reference
+  metadata        Json?           // Additional payment details
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  // Optional relations based on transaction type
+  bookingId       String?
+  packageId       String?
+  subscriptionId  String?         @unique
+
+  // Relationships
+  user            UserProfile     @relation(fields: [userId], references: [id])
+  booking         BookingEvent?   @relation(fields: [bookingId], references: [id])
+  subscription    Subscription?   @relation(fields: [subscriptionId], references: [id])
+
+  @@map("transactions")
+}
+
 
 model UserPreferences {
   id              String          @id @default(cuid())
@@ -73,6 +149,7 @@ model UserPreferences {
   @@map("user_preferences")
 }
 
+// Enhanced YogaClass with pricing and schedule
 model YogaClass {
   id            String    @id @default(cuid())
   name          String
@@ -82,15 +159,32 @@ model YogaClass {
   level         String
   instructorId  String
   maxCapacity   Int
-  price         Float     // Using Float for decimal prices
+  basePrice     Decimal   @db.Decimal(10,2)
+  scheduleId    String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   // Relationships
   instructor    UserProfile    @relation("InstructorClasses", fields: [instructorId], references: [id])
   bookings      BookingEvent[]
+  schedule      ClassSchedule? @relation(fields: [scheduleId], references: [id])
 
   @@map("yoga_classes")
+}
+
+
+// New ClassSchedule Model
+model ClassSchedule {
+  id            String      @id @default(cuid())
+  dayOfWeek     Int        // 0-6 for Sunday-Saturday
+  startTime     String     // HH:mm format
+  endTime       String     // HH:mm format
+  isRecurring   Boolean    @default(true)
+  
+  // Relationships
+  classes       YogaClass[]
+
+  @@map("class_schedules")
 }
 
 model BookingEvent {
@@ -107,6 +201,7 @@ model BookingEvent {
   // Relationships
   user         UserProfile   @relation(fields: [userId], references: [id])
   class        YogaClass     @relation(fields: [classId], references: [id])
+  transaction  Transaction[] 
 
   @@map("booking_events")
 }
