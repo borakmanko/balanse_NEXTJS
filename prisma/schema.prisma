@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
@@ -12,4 +7,138 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum ExperienceLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum UserRole {
+  USER
+  INSTRUCTOR
+  ADMIN
+}
+
+enum BookingStatus {
+  BOOKED
+  CANCELLED
+  COMPLETED
+}
+
+model UserProfile {
+  id              String          @id @default(cuid())
+  firstName       String
+  middleName      String?
+  lastName        String
+  age             Int
+  city            String
+  state           String
+  gender          Gender
+  customGender    String?
+  profilePicture  String?
+  avatar          String?
+  bio             String?
+  role            UserRole        @default(USER)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  // Relationships
+  preferences     UserPreferences?
+  bookings        BookingEvent[]
+  instructedClasses YogaClass[]   @relation("InstructorClasses")
+  userStats       UserStats?
+  streakData      StreakData[]
+
+  @@map("user_profiles")
+}
+
+model UserPreferences {
+  id              String          @id @default(cuid())
+  userId          String          @unique
+  yogaTypes       String[]        // Array of yoga types
+  experienceLevel ExperienceLevel
+  goals           String[]        // Array of goals
+  
+  // Relationship
+  user            UserProfile     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+}
+
+model YogaClass {
+  id            String    @id @default(cuid())
+  name          String
+  type          String
+  description   String
+  duration      Int       // Duration in minutes
+  level         String
+  instructorId  String
+  maxCapacity   Int
+  price         Float     // Using Float for decimal prices
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relationships
+  instructor    UserProfile    @relation("InstructorClasses", fields: [instructorId], references: [id])
+  bookings      BookingEvent[]
+
+  @@map("yoga_classes")
+}
+
+model BookingEvent {
+  id           String        @id @default(cuid())
+  userId       String
+  classId      String
+  instructorId String
+  date         String        // You might want to use DateTime instead
+  timeIn       String
+  timeOut      String
+  status       BookingStatus @default(BOOKED)
+  createdAt    DateTime      @default(now())
+
+  // Relationships
+  user         UserProfile   @relation(fields: [userId], references: [id])
+  class        YogaClass     @relation(fields: [classId], references: [id])
+
+  @@map("booking_events")
+}
+
+model UserStats {
+  id                String      @id @default(cuid())
+  userId            String      @unique
+  classesJoined     Int         @default(0)
+  hoursPracticed    Int         @default(0) // Hours as integer, or use Float for decimals
+  favoriteYogaType  String?
+  membershipSince   DateTime
+  currentStreak     Int         @default(0)
+
+  // Relationship
+  user              UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_stats")
+}
+
+model StreakData {
+  id        String      @id @default(cuid())
+  userId    String
+  date      String      // Consider using DateTime instead
+  level     Int         // 0-4 levels
+  classes   Int
+  createdAt DateTime    @default(now())
+
+  // Relationship
+  user      UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("streak_data")
+
+  // Composite unique constraint to prevent duplicate entries per user per date
+  @@unique([userId, date])
 }
