@@ -1,7 +1,6 @@
 // src/types/user.ts
 export interface UserProfile {
   id?: string;
-  firebaseUid: string;
   firstName: string;
   middleName?: string;
   lastName: string;
@@ -45,4 +44,18 @@ export interface YogaClass {
   instructorId: string;
   maxCapacity: number;
   price: number;
+}
+
+export interface UserStatsData {
+  classesJoined: number;
+  hoursPracticed: number;
+  favoriteYogaType: string;
+  membershipSince: string;
+  currentStreak: number;
+}
+
+export interface StreakData {
+  date: string;
+  level: 0 | 1 | 2 | 3 | 4;
+  classes: number;
 }

@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { ArrowLeft, Edit3 } from "lucide-react";
 import Link from "next/link";
-import UserStats from "./components/UserStats";
-import StreakCalendar from "./components/StreakCalendar";
-import ProfileForm from "./components/ProfileForm";
-import { UserProfile, UserStats as UserStatsType, StreakData } from "../../types/user";
+import UserStats from "@/app/profile/components/UserStats";
+import StreakCalendar from "@/app/profile/components/StreakCalendar";
+import ProfileForm from "@/app/profile/components/ProfileForm";
+import { UserProfile, UserStatsData, StreakData } from "../../types/user";
 
 
 // Mock data - replace with actual data fetching
-const mockStats: UserStatsType = {
+const mockStats: UserStatsData = {
   classesJoined: 42,
   hoursPracticed: 120,
   favoriteYogaType: "Vinyasa",
@@ -66,6 +66,7 @@ const generateMockStreakData = (): StreakData[] => {
 const mockStreakData = generateMockStreakData();
 
 export default function ProfilePage() {
+    
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState<UserProfile>(mockProfile);
 
@@ -82,7 +83,7 @@ export default function ProfilePage() {
 
   if (isEditing) {
     return (
-      <div className="min-h-screen bg-brand-lighter py-8">
+      <div className="min-h-screen bg-white py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-6">
             <button
@@ -233,4 +234,5 @@ export default function ProfilePage() {
       </div>
     </div>
   );
+ 
 }

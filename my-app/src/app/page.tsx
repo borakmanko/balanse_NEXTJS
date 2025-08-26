@@ -245,10 +245,10 @@ export default function HomePage() {
                     <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
                       <UserIcon size={16} className="text-amber-600" />
                     </div>
-                    <span className="text-sm font-medium text-gray-700">
+                    <Link href="/profile" className="text-sm font-medium text-gray-700">
                       {user.user_metadata?.full_name ||
                         user.email?.split("@")[0]}
-                    </span>
+                    </Link>
                   </div>
                   <button
                     onClick={signOut}

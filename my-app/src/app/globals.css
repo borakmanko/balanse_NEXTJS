@@ -4,244 +4,138 @@
   /* Main background and foreground colors */
   --background: #ffffff;
   --foreground: #171717;
-  
-  /* Original variables */
+
+  /* Font tokens */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
-  /* Brand Color System - Caramel/Amber Theme */
+
+  /* Brand Color System - Matching Document 1 exactly */
   --brand-primary: #d97706;        /* amber-600 */
   --brand-primary-hover: #b45309;  /* amber-700 */
   --brand-secondary: #f59e0b;      /* amber-500 */
   --brand-accent: #eab308;         /* yellow-500 */
   --brand-light: #fef3c7;          /* amber-100 */
   --brand-lighter: #fffbeb;        /* amber-50 */
-  
-  /* Gradient combinations */
-  --brand-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
-  --brand-gradient-hover: linear-gradient(135deg, var(--brand-primary-hover), #ca8a04);
-  
-  /* Background gradients for sections */
-  --hero-bg: linear-gradient(135deg, var(--brand-lighter) 0%, #ffffff 50%, #fef9c3 100%);
-  --testimonial-bg: linear-gradient(135deg, var(--brand-lighter) 0%, #ffffff 50%, #fef9c3 100%);
-  
-  /* Text colors on brand backgrounds */
+
+  /* Text on backgrounds */
+  --brand-on-light: #d97706;       /* amber-600 text on light backgrounds */
   --brand-text-on-primary: #ffffff;
-  --brand-text-on-light: var(--brand-primary);
-  
+  --brand-text-on-light: #d97706;
+
   /* Hover states */
   --brand-hover-bg: #fef3c7;       /* amber-100 */
-  --brand-hover-text: var(--brand-primary-hover);
+  --brand-hover-text: #b45309;     /* amber-700 */
+
+  /* Main gradient combos - matching document 1 */
+  --brand-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+  --brand-gradient-hover: linear-gradient(135deg, var(--brand-primary-hover), #ca8a04);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    
-    /* Dark mode brand colors - slightly adjusted for better contrast */
-    --brand-primary: #f59e0b;        /* amber-500 for better visibility */
-    --brand-primary-hover: #fbbf24;  /* amber-400 */
-    --brand-secondary: #d97706;      /* amber-600 */
+
+    /* Dark mode brand colors - keeping same as document 1 approach */
+    --brand-primary: #d97706;        /* amber-600 */
+    --brand-primary-hover: #b45309;  /* amber-700 */
+    --brand-secondary: #f59e0b;      /* amber-500 */
     --brand-accent: #eab308;         /* yellow-500 */
-    --brand-light: #451a03;          /* amber-900 for dark backgrounds */
-    --brand-lighter: #292524;        /* stone-800 for subtle backgrounds */
-    
+    --brand-light: #fef3c7;          /* amber-100 */
+    --brand-lighter: #fffbeb;        /* amber-50 */
+
+    /* Keep same gradients in dark mode */
     --brand-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
-    --brand-gradient-hover: linear-gradient(135deg, var(--brand-primary-hover), #facc15);
-    
-    --hero-bg: linear-gradient(135deg, #1c1917 0%, #0a0a0a 50%, #292524 100%);
-    --testimonial-bg: linear-gradient(135deg, #1c1917 0%, #0a0a0a 50%, #292524 100%);
-    
-    --brand-hover-bg: #451a03;
-    --brand-hover-text: var(--brand-primary-hover);
+    --brand-gradient-hover: linear-gradient(135deg, var(--brand-primary-hover), #ca8a04);
+
+    --brand-hover-bg: #fef3c7;
+    --brand-hover-text: #b45309;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-/* Utility classes for brand colors */
-.brand-primary {
-  color: var(--brand-primary);
-}
-
-.brand-bg-primary {
-  background-color: var(--brand-primary);
-}
-
-.brand-gradient {
-  background: var(--brand-gradient);
-}
-
-.brand-gradient-hover:hover {
-  background: var(--brand-gradient-hover);
-}
-
-.brand-hero-bg {
-  background: var(--hero-bg);
-}
-
-.brand-testimonial-bg {
-  background: var(--testimonial-bg);
-}
-
-/* Custom Tailwind utilities that use CSS variables */
+/* Utility classes matching document 1 exactly */
 @layer utilities {
+  /* Brand Colors */
+  .bg-brand-primary { background-color: var(--brand-primary); }
+  .bg-brand-primary-hover { background-color: var(--brand-primary-hover); }
+  .bg-brand-secondary { background-color: var(--brand-secondary); }
+  .bg-brand-accent { background-color: var(--brand-accent); }
+  .bg-brand-light { background-color: var(--brand-light); }
+  .bg-brand-lighter { background-color: var(--brand-lighter); }
+  .bg-brand-gradient { background: var(--brand-gradient); }
+  
+  .text-brand-primary { color: var(--brand-primary); }
+  .text-brand-secondary { color: var(--brand-secondary); }
+  .text-brand-accent { color: var(--brand-accent); }
+  
+  .border-brand-primary { border-color: var(--brand-primary); }
+  .border-brand-light { border-color: var(--brand-light); }
 
-  /* Streak colors for habit tracking */
- .streak-0 { background-color: var(--brand-lighter); } /* empty */
+  /* Streak Colors - matching document 1 */
+  .streak-0 { background-color: var(--brand-lighter); } /* empty */
   .streak-1 { background-color: var(--brand-light); }
   .streak-2 { background-color: #fcd34d; } /* amber-300 */
   .streak-3 { background-color: var(--brand-secondary); } /* amber-500 */
   .streak-4 { background-color: var(--brand-primary); } /* amber-600 */
-
-  .bg-brand-primary {
-    background-color: var(--brand-primary);
-  }
-  
-  .bg-brand-primary-hover:hover {
-    background-color: var(--brand-primary-hover);
-  }
-  
-  .bg-brand-secondary {
-    background-color: var(--brand-secondary);
-  }
-  
-  .bg-brand-light {
-    background-color: var(--brand-light);
-  }
-  
-  .bg-brand-lighter {
-    background-color: var(--brand-lighter);
-  }
-  
-  .text-brand-primary {
-    color: var(--brand-primary);
-  }
-  
-  .text-brand-primary-hover:hover {
-    color: var(--brand-primary-hover);
-  }
-  
-  .text-brand-secondary {
-    color: var(--brand-secondary);
-  }
-  
-  .text-brand-on-primary {
-    color: var(--brand-text-on-primary);
-  }
-  
-  .text-brand-on-light {
-    color: var(--brand-text-on-light);
-  }
-  
-  .border-brand-primary {
-    border-color: var(--brand-primary);
-  }
-  
-  .bg-brand-gradient {
-    background: var(--brand-gradient);
-  }
-  
-  .bg-brand-gradient-hover:hover {
-    background: var(--brand-gradient-hover);
-  }
-  
-  .hover-brand-bg:hover {
-    background-color: var(--brand-hover-bg);
-  }
-  
-  .hover-brand-text:hover {
-    color: var(--brand-hover-text);
-  }
 }
 
-/* Additional component-specific styles */
+/* Brand Components - matching document 1 structure */
 .brand-card {
   background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--brand-light);
   transition: all 0.3s ease;
 }
 
 .brand-card:hover {
-  border-color: var(--brand-primary);
-  box-shadow: 0 10px 25px rgba(217, 119, 6, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .brand-button {
   background: var(--brand-gradient);
-  color: var(--brand-text-on-primary);
-  border: none;
-  padding: 12px 24px;
-  border-radius: 9999px;
+  color: white;
   font-weight: 600;
-  transition: all 0.2s ease;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: scale(1);
 }
 
 .brand-button:hover {
   background: var(--brand-gradient-hover);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transform: scale(1.05);
 }
 
 .brand-button-outline {
-  background: transparent;
-  color: var(--brand-primary);
   border: 2px solid var(--brand-primary);
-  padding: 12px 24px;
-  border-radius: 9999px;
+  color: var(--brand-primary);
   font-weight: 600;
-  transition: all 0.2s ease;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background: transparent;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .brand-button-outline:hover {
-  background: var(--brand-hover-bg);
-  color: var(--brand-hover-text);
-}
-
-/* Loading spinner with brand colors */
-.brand-spinner {
-  border: 2px solid var(--brand-light);
-  border-top-color: var(--brand-primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Pattern background for hero section */
-.brand-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d97706' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-
-/* Focus styles for accessibility */
-.brand-focus:focus {
-  outline: 2px solid var(--brand-primary);
-  outline-offset: 2px;
-}
-
-/* Custom scrollbar (webkit browsers) */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--brand-lighter);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--brand-primary);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-primary-hover);
+  background-color: var(--brand-lighter);
 }
